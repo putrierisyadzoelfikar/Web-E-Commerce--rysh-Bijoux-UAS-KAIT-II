@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Érysh Bijoux - Luxury Jewelry E-Commerce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        // Konfigurasi internal untuk engine Tailwind tetap diletakkan di head
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ivory: '#FAF8F5',
+                        gold: '#C9A96A',
+                        darkBlack: '#1F1F1F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-ivory text-darkBlack flex flex-col min-h-screen">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" onclick="showPage('katalog-page')" class="text-2xl font-black tracking-wide font-title text-darkBlack">Érysh<span class="text-gold">Bijoux</span></a>
+            
+            <div class="hidden md:flex space-x-8 font-medium text-sm tracking-wider uppercase items-center">
+                <a href="#" onclick="showPage('katalog-page')" class="hover:text-gold transition">Home</a>
+                <a href="#katalog" onclick="showPage('katalog-page')" class="hover:text-gold transition">Collection</a>
+                <a href="#" onclick="showPage('business-overview')" class="hover:text-gold transition text-gray-500">Business Overview</a>
+                <a href="#" onclick="showPage('admin-page')" class="bg-gold/10 text-gold font-bold px-3 py-1 rounded-full text-xs hover:bg-gold hover:text-white transition">🛡️ Admin Web</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <div class="relative cursor-pointer p-2 bg-ivory rounded-full hover:bg-gray-100 transition" onclick="toggleCartModal()">
+                    <span class="text-xl">🛒</span>
+                    <span id="cartCount" class="absolute top-0 right-0 bg-gold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="katalog-page" class="page-section flex-grow">
+        <div class="max-w-7xl mx-auto px-4 my-8">
+            <div class="bg-darkBlack rounded-3xl p-8 md:p-16 flex flex-col md:flex-row items-center justify-between text-white shadow-xl relative overflow-hidden">
+                <div class="space-y-6 max-w-xl z-10">
+                    <span class="border border-gold text-gold text-xs px-3 py-1 rounded-full uppercase tracking-widest font-semibold">exclusive offer</span>
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight font-title">Timeless <br><span class="text-gold italic">Elegance</span></h1>
+                    <p class="text-sm opacity-80 font-light">At Érysh Bijoux, we believe true elegance is timeless. Our carefully crafted jewelry blends refined design with enduring quality, creating pieces that inspire confidence and become part of your story for generations.</p>
+                    <a href="#katalog" class="inline-block bg-gold text-white font-medium text-sm tracking-wider uppercase px-8 py-3.5 rounded-full shadow hover:bg-opacity-90 transition">Find Collection</a>
+                </div>
+                <div class="mt-8 md:mt-0 z-10 text-9xl opacity-90 drop-shadow-2xl animate-pulse">💎</div>
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-gold opacity-10 rounded-full blur-3xl"></div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 mb-8 space-y-6">
+            <div>
+                <h3 class="text-xs uppercase font-bold tracking-widest text-gray-400 mb-3">1. Filter By Category</h3>
+                <div class="flex flex-wrap gap-2" id="categoryButtons">
+                    <button onclick="filterCategory(event, 'all')" class="category-btn bg-darkBlack text-white px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm">All</button>
+                    <button onclick="filterCategory(event, 'La Promesse')" class="category-btn bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm hover:border-gold">La Promesse (Ring)</button>
+                    <button onclick="filterCategory(event, 'Lumière')" class="category-btn bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm hover:border-gold">Lumière (Necklace)</button>
+                    <button onclick="filterCategory(event, 'Éclat')" class="category-btn bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm hover:border-gold">Éclat (Earrings)</button>
+                    <button onclick="filterCategory(event, 'Grâce')" class="category-btn bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm hover:border-gold">Grâce (Bracelet)</button>
+                    <button onclick="filterCategory(event, 'Rêverie')" class="category-btn bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm hover:border-gold">Rêverie (Anklet)</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <div>
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-gray-400 mb-3">2. Filter By Max Price</h3>
+                    <div class="flex items-center space-x-4">
+                        <input type="range" id="priceRange" min="400000" max="3000000" step="50000" value="3000000" oninput="handlePriceFilter(this.value)" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gold">
+                        <span id="priceLabel" class="text-xs font-bold text-darkBlack border bg-white px-3 py-1.5 rounded-lg whitespace-nowrap">Rp 3.000.000</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-gray-400 mb-3">3. Search Jewelry Name</h3>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Type to search product..." class="w-full border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-gold bg-white shadow-sm">
+                </div>
+            </div>
+        </div>
+
+        <main class="max-w-7xl mx-auto px-4 py-4 mb-16" id="katalog">
+            <h2 class="text-3xl font-bold font-title text-darkBlack mb-8 relative inline-block">
+                Masterpiece Collection
+                <span class="absolute left-0 bottom-[-8px] w-12 h-[3px] bg-gold"></span>
+            </h2>
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"></div>
+        </main>
+    </div>
+
+    <div id="admin-page" class="page-section hidden max-w-7xl mx-auto px-4 py-10 flex-grow w-full">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b pb-4 mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold font-title text-darkBlack">🔒 Central Admin Control Panel</h2>
+                    <p class="text-sm text-gray-400">Manajemen inventory real-time terintegrasi LocalStorage GitHub Pages.</p>
+                </div>
+                <button onclick="openAdminAddModal()" class="mt-4 md:mt-0 bg-gold text-white font-semibold text-xs uppercase px-4 py-2.5 rounded-lg shadow hover:bg-opacity-90 transition">+ Tambah Perhiasan Baru</button>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-gray-100">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-500 text-xs font-bold uppercase border-b border-gray-100">
+                            <th class="p-4">Visual</th>
+                            <th class="p-4">Nama Produk</th>
+                            <th class="p-4">Kategori</th>
+                            <th class="p-4">Harga Terpasang</th>
+                            <th class="p-4">Stok Barang</th>
+                            <th class="p-4 text-center">Aksi Manajemen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody" class="divide-y divide-gray-100 text-gray-700"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl border-t-8 border-gold">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-darkBlack transition">&times;</button>
+            <h3 id="adminModalTitle" class="text-xl font-bold font-title text-darkBlack mb-4">Tambah Aset Baru</h3>
+            <form id="adminForm" onsubmit="saveAdminProduct(event)" class="space-y-4">
+                <input type="hidden" id="adminProductId">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Ikon Emoji Visual *</label>
+                    <input type="text" id="adminProductImg" required placeholder="Contoh: 💍 atau 💎" class="w-full border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Nama Perhiasan *</label>
+                    <input type="text" id="adminProductName" required placeholder="Contoh: Royal Amour Ring" class="w-full border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Kategori Koleksi *</label>
+                    <select id="adminProductCategory" required class="w-full border border-gray-200 rounded-lg p-2 text-sm bg-white focus:outline-none focus:border-gold">
+                        <option value="La Promesse">La Promesse</option>
+                        <option value="Lumière">Lumière</option>
+                        <option value="Éclat">Éclat</option>
+                        <option value="Grâce">Grâce</option>
+                        <option value="Rêverie">Rêverie</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Harga (IDR) *</label>
+                    <input type="number" id="adminProductPrice" required placeholder="Contoh: 850000" class="w-full border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Stok Barang *</label>
+                    <input type="number" id="adminProductStock" required min="0" placeholder="Contoh: 10" class="w-full border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Deskripsi Penuh Premium *</label>
+                    <textarea id="adminProductDesc" required rows="3" placeholder="Tulis rincian craftmanship material..." class="w-full border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:border-gold"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-darkBlack text-gold font-bold text-xs py-3 rounded-xl uppercase tracking-widest hover:bg-gold hover:text-white transition">Simpan Konfigurasi</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="checkout-page" class="page-section hidden max-w-7xl mx-auto px-4 py-10 flex-grow">
+        <h2 class="text-3xl font-bold font-title text-darkBlack mb-2">Checkout Verification</h2>
+        <p class="text-gray-500 text-sm mb-8">Please complete your shipping details and choose your simulated payment gateway method.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-6">
+                <h3 class="text-lg font-bold border-b pb-3 text-darkBlack">1. Shipping Info & Address Validation</h3>
+                <form id="checkoutForm" onsubmit="processPayment(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Full Name *</label>
+                        <input type="text" id="billingName" required class="w-full border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">WhatsApp / Phone Number *</label>
+                            <input type="tel" id="billingPhone" required class="w-full border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-gold" placeholder="08xxxxxxxxxx">
+                            <span id="phoneError" class="text-red-500 text-[11px] hidden">Nomor WhatsApp tidak valid (Minimal 10 digit).</span>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Email *</label>
+                            <input type="email" id="billingEmail" required class="w-full border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-gold" placeholder="nama@email.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Full Address *</label>
+                        <textarea id="billingAddress" required rows="3" class="w-full border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-gold" placeholder="Alamat lengkap pengiriman..."></textarea>
+                    </div>
+
+                    <h3 class="text-lg font-bold border-b pb-3 pt-4 text-darkBlack">2. Select Payment Gateway Secure Ecosystem</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <label class="border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-gold transition relative">
+                            <input type="radio" name="paymentGateway" value="Midtrans" checked class="absolute top-3 right-3 accent-gold">
+                            <span class="text-2xl mb-1">💳</span>
+                            <span class="font-bold text-sm">Midtrans Secure</span>
+                            <span class="text-[10px] text-gray-400 text-center">Virtual Account / GPay</span>
+                        </label>
+                        <label class="border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-gold transition relative">
+                            <input type="radio" name="paymentGateway" value="Xendit" class="absolute top-3 right-3 accent-gold">
+                            <span class="text-2xl mb-1">⚡</span>
+                            <span class="font-bold text-sm">Xendit Instant</span>
+                            <span class="text-[10px] text-gray-400 text-center">QRIS / Instant E-Wallet</span>
+                        </label>
+                        <label class="border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-gold transition relative">
+                            <input type="radio" name="paymentGateway" value="PayPal Dummy" class="absolute top-3 right-3 accent-gold">
+                            <span class="text-2xl mb-1">🅿️</span>
+                            <span class="font-bold text-sm">PayPal Sandbox</span>
+                            <span class="text-[10px] text-gray-400 text-center">Global Credit Card / USD</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full mt-6 bg-darkBlack text-gold font-bold tracking-wider uppercase py-4 rounded-xl border border-gold hover:bg-gold hover:text-white transition shadow-md">
+                        Secure Checkout via Gateway Simulated API
+                    </button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-fit space-y-4">
+                <h3 class="text-lg font-bold border-b pb-3 text-darkBlack">Order Summary</h3>
+                <div id="checkoutItemsList" class="space-y-3 max-h-60 overflow-y-auto"></div>
+                <div class="border-t pt-4 space-y-2 text-sm">
+                    <div class="flex justify-between text-gray-500">
+                        <span>Subtotal (Automated Calculation)</span>
+                        <span id="checkoutSubtotal">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-500">
+                        <span>Shipping Fee & Premium Insurance</span>
+                        <span class="text-green-600 font-semibold uppercase tracking-wide text-xs">FREE Premium Insurance</span>
+                    </div>
+                    <div class="flex justify-between font-bold text-lg border-t pt-2 text-darkBlack">
+                        <span>Total Payment</span>
+                        <span id="checkoutTotal" class="text-gold">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="business-overview" class="page-section hidden max-w-5xl mx-auto px-4 py-10 flex-grow">
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-8">
+            <div class="border-b pb-4">
+                <h2 class="text-3xl font-bold font-title text-gold">Business Overview Documentation</h2>
+                <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-semibold">Capstone Project KAIT II - Administrasi Bisnis</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed">
+                <div class="space-y-4">
+                    <p><strong>1. Nama Bisnis & Value Proposition:</strong><br>
+                    <span class="text-gray-600">Érysh Bijoux. E-commerce perhiasan mewah terkurasi yang menawarkan material emas 18K dan perak sterling 925 berstandar internasional dengan transparansi harga tanpa biaya tersembunyi serta kemudahan check-out digital terintegrasi.</span></p>
+                    <p><strong>2. Target Pasar & Segmentasi Pelanggan:</strong><br>
+                    <span class="text-gray-600">Masyarakat kelas menengah ke atas (High-earners), rentang usia 23-45 tahun, pasangan yang mempersiapkan pernikahan, serta kolektor aksesori seni bernilai estetika premium.</span></p>
+                    <p><strong>3. Analisis Pasar Singkat & Kompetitor:</strong><br>
+                    <span class="text-gray-600">Pasar perhiasan online berkembang pesat namun dihantui masalah kepercayaan visual vs produkt asli. Kompetitor utama adalah ritel konvensional (Tiffany&Co, Frank & co). Keunggulan kami adalah transparansi simulasi payment gateway real-time.</span></p>
+                    <p><strong>4. Strategi Manajemen Produk & Katalog:</strong><br>
+                    <span class="text-gray-600">Produk dibagi dalam 5 kategori koleksi bermakna filosofis tinggi Prancis (La Promesse, Lumière, Éclat, Grâce, Rêverie) menggunakan visual emoji resolusi tinggi sebagai mock-up digital serta deskripsi craftmanship yang detail.</span></p>
+                    <p><strong>5. Model Bisnis & Revenue Stream:</strong><br>
+                    <span class="text-gray-600">B2C (Business-to-Consumer) model penjualan langsung produk fisik ready-to-wear perhiasan seni melalui platform e-commerce mandiri dengan penetapan premium retail profit margin berkisar 35-50%.</span></p>
+                </div>
+                <div class="space-y-4">
+                    <p><strong>6. Strategi Harga, Promosi, & Diskon:</strong><br>
+                    <span class="text-gray-600">Menggunakan metode Value-Based Pricing. Promosi dilakukan lewat program 'Free Premium Shipping & Insurance' otomatis untuk mengeliminasi friksi psikologis biaya tambahan saat checkout.</span></p>
+                    <p><strong>7. Process Checkout & Simulasi Payment Gateway:</strong><br>
+                    <span class="text-gray-600">Integrasi simulasi multi-gateway API dengan opsi Midtrans (Lokal/Bank Virtual), Xendit (Instant QRIS/E-Wallet), dan PayPal Sandbox (Kartu Kredit Global) guna memberikan fleksibilitas opsi keamanan bertransaksi bagi user.</span></p>
+                    <p><strong>8. Rencana SEO, Keamanan, & Pemeliharaan:</strong><br>
+                    <span class="text-gray-600">Implementasi on-page SEO menggunakan struktur tag semantik HTML5 bersih, protokol HTTPS SSL enkripsi penuh, proteksi validasi form data dari manipulasi skrip berbahaya, dan audit berkala file lokal.</span></p>
+                    <p><strong>9. Rencana Penggunaan Data Analytics:</strong><br>
+                    <span class="text-gray-600">Memanfaatkan pelacakan event berbasis interaksi pengguna. Memonitor rasio klik katalog, melacak persentase keranjang belanja terbengkalai, dan menganalisis metode pembayaran gateway paling populer untuk menyusun keputusan restock barang.</span></p>
+                    <p><strong>10. Kesimpulan Integrasi Ekosistem:</strong><br>
+                    <span class="text-gold font-semibold">Seluruh komponen teknologi front-end berkolaborasi secara real-time dengan aspek logika administrasi bisnis retail mewah modern.</span></p>
+                </div>
+            </div>
+            <div class="pt-4 border-t flex justify-end">
+                <button onclick="showPage('katalog-page')" class="bg-darkBlack text-white text-xs px-6 py-3 rounded-lg hover:bg-gold transition font-bold uppercase tracking-wider">Back to Luxury Store Home</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl border-t-8 border-gold transform transition-all scale-100">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-darkBlack transition">&times;</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex justify-end backdrop-blur-xs">
+        <div class="bg-white w-full max-w-md h-full p-6 flex flex-col justify-between shadow-2xl">
+            <div>
+                <div class="flex justify-between items-center border-b pb-4 mb-4">
+                    <h3 class="text-xl font-bold font-title text-darkBlack">Your Shopping Cart</h3>
+                    <button onclick="toggleCartModal()" class="text-3xl text-gray-400 hover:text-darkBlack transition">&times;</button>
+                </div>
+                <div id="cartItemsList" class="space-y-4 overflow-y-auto max-h-[65vh] pr-1"></div>
+            </div>
+            <div class="border-t pt-4 bg-white">
+                <div class="flex justify-between font-bold text-lg mb-4">
+                    <span>Total (Automatic Calc):</span>
+                    <span id="cartTotal" class="text-gold">Rp 0</span>
+                </div>
+                <button onclick="goToCheckoutPage()" class="w-full bg-darkBlack text-gold font-bold py-3.5 rounded-xl border border-gold uppercase tracking-wider text-sm hover:bg-gold hover:text-white transition">
+                    Proceed to Shipping Address
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-darkBlack text-gray-400 mt-auto py-12 border-t-4 border-gold">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs tracking-wide space-y-3">
+            <p class="text-white font-medium tracking-widest font-title text-sm">&copy; 2026 Érysh Bijoux. All Rights Reserved.</p>
+            <p>Capstone Project KAIT II - Business Administration & Functional Digital Strategy Architecture.</p>
+            <p class="opacity-50">Simulated Encrypted Payment Gateway Core API: Midtrans Secured | Xendit Engine | PayPal Sandbox</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
